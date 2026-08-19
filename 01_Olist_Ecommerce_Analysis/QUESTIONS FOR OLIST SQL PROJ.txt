@@ -1,0 +1,16 @@
+QUESTIONS FOR OLIST SQL PROJ
+
+1. What is monthly revenue trend with MoM growth % — and which 3 months had the sharpest drops?
+2. What are the top 5 revenue-generating product categories — and what % of total revenue do they contribute (cumulative share)?
+
+3. Cohort retention — of customers who bought in month X, what % returned in months 1, 2, 3 after?
+4. Customer segmentation by CLV — who are Bronze, Silver, Gold customers and what's the revenue split?
+
+5. Which sellers are consistently late — ranked by delay rate with their revenue contribution?
+6. Which state × category combinations have the worst average delivery delay?
+7. Does a higher delivery delay directly hurt review scores — prove it with data?
+
+8. How complete is the dataset — null audit across all 8 tables with completeness % per column?
+9. Which orders have data inconsistencies — delivered before purchase, estimated before order, etc.?
+
+10. Based on all above — which 3 states should Olist prioritize for operational improvement, and why?
