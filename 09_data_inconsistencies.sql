@@ -1,0 +1,66 @@
+--9. Which orders have data inconsistencies — delivered before purchase, estimated before order, etc.?
+		
+SELECT
+    'SELECT ''' || table_name || ''' AS table_name, 
+    ''' ||column_name || ''' AS column_name, ' ||
+    'COUNT(*) AS total_rows, ' ||
+    'COUNT(*) - COUNT(' || column_name || ') AS null_count, ' ||
+    'ROUND(COUNT(' || column_name || ') * 100.0 / COUNT(*), 2) AS completeness_pct ' ||
+    'FROM ' || table_name ||
+    'UNION ALL'
+  AS sql_query
+FROM information_schema.columns
+WHERE table_schema = 'public';
+
+SELECT 'orders' AS table_name, 'order_approved_at' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_approved_at) AS null_count, ROUND(COUNT(order_approved_at) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'orders' AS table_name, 'order_delivered_carrier_date' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_delivered_carrier_date) AS null_count, ROUND(COUNT(order_delivered_carrier_date) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_creation_date' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_creation_date) AS null_count, ROUND(COUNT(review_creation_date) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_answer_timestamp' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_answer_timestamp) AS null_count, ROUND(COUNT(review_answer_timestamp) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'order_items' AS table_name, 'shipping_limit_date' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(shipping_limit_date) AS null_count, ROUND(COUNT(shipping_limit_date) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'order_items' AS table_name, 'price' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(price) AS null_count, ROUND(COUNT(price) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'products' AS table_name, 'product_name_length' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_name_length) AS null_count, ROUND(COUNT(product_name_length) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_description_length' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_description_length) AS null_count, ROUND(COUNT(product_description_length) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_photos_qty' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_photos_qty) AS null_count, ROUND(COUNT(product_photos_qty) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_weight_g' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_weight_g) AS null_count, ROUND(COUNT(product_weight_g) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_length_cm' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_length_cm) AS null_count, ROUND(COUNT(product_length_cm) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_height_cm' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_height_cm) AS null_count, ROUND(COUNT(product_height_cm) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_width_cm' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_width_cm) AS null_count, ROUND(COUNT(product_width_cm) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'order_items' AS table_name, 'freight_value' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(freight_value) AS null_count, ROUND(COUNT(freight_value) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'orders' AS table_name, 'order_delivered_customer_date' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_delivered_customer_date) AS null_count, ROUND(COUNT(order_delivered_customer_date) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'order_payments' AS table_name, 'payment_sequential' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(payment_sequential) AS null_count, ROUND(COUNT(payment_sequential) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_payments UNION ALL
+SELECT 'orders' AS table_name, 'order_estimated_delivery_date' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_estimated_delivery_date) AS null_count, ROUND(COUNT(order_estimated_delivery_date) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'order_payments' AS table_name, 'payment_installments' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(payment_installments) AS null_count, ROUND(COUNT(payment_installments) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_payments UNION ALL
+SELECT 'geolocation' AS table_name, 'geolocation_lat' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(geolocation_lat) AS null_count, ROUND(COUNT(geolocation_lat) * 100.0 / COUNT(*), 2) AS completeness_pct FROM geolocation UNION ALL
+SELECT 'geolocation' AS table_name, 'geolocation_lng' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(geolocation_lng) AS null_count, ROUND(COUNT(geolocation_lng) * 100.0 / COUNT(*), 2) AS completeness_pct FROM geolocation UNION ALL
+SELECT 'order_payments' AS table_name, 'payment_value' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(payment_value) AS null_count, ROUND(COUNT(payment_value) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_payments UNION ALL
+SELECT 'orders' AS table_name, 'order_purchase_timestamp' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_purchase_timestamp) AS null_count, ROUND(COUNT(order_purchase_timestamp) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'order_items' AS table_name, 'order_item_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_item_id) AS null_count, ROUND(COUNT(order_item_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_score' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_score) AS null_count, ROUND(COUNT(review_score) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'geolocation' AS table_name, 'geolocation_city' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(geolocation_city) AS null_count, ROUND(COUNT(geolocation_city) * 100.0 / COUNT(*), 2) AS completeness_pct FROM geolocation UNION ALL
+SELECT 'geolocation' AS table_name, 'geolocation_state' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(geolocation_state) AS null_count, ROUND(COUNT(geolocation_state) * 100.0 / COUNT(*), 2) AS completeness_pct FROM geolocation UNION ALL
+SELECT 'product_category_name_translation' AS table_name, 'product_category_name' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_category_name) AS null_count, ROUND(COUNT(product_category_name) * 100.0 / COUNT(*), 2) AS completeness_pct FROM product_category_name_translation UNION ALL
+SELECT 'customers' AS table_name, 'customer_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_id) AS null_count, ROUND(COUNT(customer_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM customers UNION ALL
+SELECT 'product_category_name_translation' AS table_name, 'product_category_name_english' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_category_name_english) AS null_count, ROUND(COUNT(product_category_name_english) * 100.0 / COUNT(*), 2) AS completeness_pct FROM product_category_name_translation UNION ALL
+SELECT 'customers' AS table_name, 'customer_unique_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_unique_id) AS null_count, ROUND(COUNT(customer_unique_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM customers UNION ALL
+SELECT 'customers' AS table_name, 'customer_zip_code_prefix' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_zip_code_prefix) AS null_count, ROUND(COUNT(customer_zip_code_prefix) * 100.0 / COUNT(*), 2) AS completeness_pct FROM customers UNION ALL
+SELECT 'customers' AS table_name, 'customer_city' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_city) AS null_count, ROUND(COUNT(customer_city) * 100.0 / COUNT(*), 2) AS completeness_pct FROM customers UNION ALL
+SELECT 'customers' AS table_name, 'customer_state' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_state) AS null_count, ROUND(COUNT(customer_state) * 100.0 / COUNT(*), 2) AS completeness_pct FROM customers UNION ALL
+SELECT 'orders' AS table_name, 'order_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_id) AS null_count, ROUND(COUNT(order_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'orders' AS table_name, 'customer_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(customer_id) AS null_count, ROUND(COUNT(customer_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'orders' AS table_name, 'order_status' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_status) AS null_count, ROUND(COUNT(order_status) * 100.0 / COUNT(*), 2) AS completeness_pct FROM orders UNION ALL
+SELECT 'order_items' AS table_name, 'order_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_id) AS null_count, ROUND(COUNT(order_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'order_items' AS table_name, 'product_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_id) AS null_count, ROUND(COUNT(product_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'order_items' AS table_name, 'seller_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(seller_id) AS null_count, ROUND(COUNT(seller_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_items UNION ALL
+SELECT 'order_payments' AS table_name, 'order_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_id) AS null_count, ROUND(COUNT(order_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_payments UNION ALL
+SELECT 'order_payments' AS table_name, 'payment_type' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(payment_type) AS null_count, ROUND(COUNT(payment_type) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_payments UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_id) AS null_count, ROUND(COUNT(review_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'order_reviews' AS table_name, 'order_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(order_id) AS null_count, ROUND(COUNT(order_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_comment_title' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_comment_title) AS null_count, ROUND(COUNT(review_comment_title) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'order_reviews' AS table_name, 'review_comment_message' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(review_comment_message) AS null_count, ROUND(COUNT(review_comment_message) * 100.0 / COUNT(*), 2) AS completeness_pct FROM order_reviews UNION ALL
+SELECT 'products' AS table_name, 'product_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_id) AS null_count, ROUND(COUNT(product_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'products' AS table_name, 'product_category_name' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(product_category_name) AS null_count, ROUND(COUNT(product_category_name) * 100.0 / COUNT(*), 2) AS completeness_pct FROM products UNION ALL
+SELECT 'sellers' AS table_name, 'seller_id' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(seller_id) AS null_count, ROUND(COUNT(seller_id) * 100.0 / COUNT(*), 2) AS completeness_pct FROM sellers UNION ALL
+SELECT 'sellers' AS table_name, 'seller_zip_code_prefix' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(seller_zip_code_prefix) AS null_count, ROUND(COUNT(seller_zip_code_prefix) * 100.0 / COUNT(*), 2) AS completeness_pct FROM sellers UNION ALL
+SELECT 'sellers' AS table_name, 'seller_city' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(seller_city) AS null_count, ROUND(COUNT(seller_city) * 100.0 / COUNT(*), 2) AS completeness_pct FROM sellers UNION ALL
+SELECT 'sellers' AS table_name, 'seller_state' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(seller_state) AS null_count, ROUND(COUNT(seller_state) * 100.0 / COUNT(*), 2) AS completeness_pct FROM sellers UNION ALL
+SELECT 'geolocation' AS table_name, 'geolocation_zip_code_prefix' AS column_name, COUNT(*) AS total_rows, COUNT(*) - COUNT(geolocation_zip_code_prefix) AS null_count, ROUND(COUNT(geolocation_zip_code_prefix) * 100.0 / COUNT(*), 2) AS completeness_pct FROM geolocation;
